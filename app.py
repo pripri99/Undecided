@@ -6,7 +6,7 @@ app.config.from_object('config')
 
 @app.route("/")
 def hello():
-  #return "My name is Manpreet!"
+  #return "My name is Kerushani!"
   return render_template('pages/index.html')
 
 if __name__ == "__main__":
