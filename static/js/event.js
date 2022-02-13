@@ -1,10 +1,12 @@
 var current="";
         function getUserLoc(){
+            xmlHttp.open("GET", "https://ipinfo.io/json?token=b2c04e50a67ab4", true);
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() { 
                 if (xmlHttp.readyState == 4){
                     if(xmlHttp.status == 200){
                         current=JSON.parse(xmlHttp.responseText).loc;
+                        console.log(current);
                         document.getElementById("searchButton").disabled=false;
                     }else{
                         console.log("Could not fetch the current position")
@@ -12,7 +14,7 @@ var current="";
                     }
                 }
             }
-            xmlHttp.open("GET", "https://ipinfo.io/?token=366644e654de5f", true);
+            
             xmlHttp.send(null);
         };
 
