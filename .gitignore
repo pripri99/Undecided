@@ -1,4 +1,5 @@
 *.pyc
 .DS_Store
+.env
 env1
 venv
