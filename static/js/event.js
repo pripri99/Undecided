@@ -1,5 +1,29 @@
 var current="";
-        function getUserLoc(){
+function getUserLoc() {
+    let apiKey = '11e89d5932b74164834b90e6e5d99d87';
+    $.getJSON('https://ipgeolocation.abstractapi.com/v1/?api_key=' + apiKey, function(data) {
+    const res = JSON.stringify(data, null, 2)
+    console.log(res);
+    console.log(res[0])
+    console.log(JSON.parse(data));
+    });
+
+}
+        /*const getUserLoc = async () => {
+            const res = await fetch("https://ipinfo.io/json?token=b2c04e50a67ab4");
+            if (res.status === 200) {
+                const data = await res.json();
+                console.log(data);
+                //return data;
+                current=JSON.parse(data).loc;
+                console.log(current);
+                document.getElementById("searchButton").disabled=false;
+            } else {
+                console.log("Could not fetch the current position")
+                document.getElementById("err").innerHTML="Could not fetch the current position"
+                //throw new Error('Unable to fetch data!!!');
+            }
+        }*//*(){
             xmlHttp.open("GET", "https://ipinfo.io/json?token=b2c04e50a67ab4", true);
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() { 
@@ -16,7 +40,7 @@ var current="";
             }
             
             xmlHttp.send(null);
-        };
+        };*/
 
         function enableDisableTB() {
             var location = document.getElementById("location");
