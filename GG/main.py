@@ -1,4 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, Blueprint, render_template, request
+from flask_login import login_required, current_user
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_jwt_extended import JWTManager
+from flask_mail import Mail
+import os 
+from . import db 
 import requests
 import json
 import pygeohash as pgh
@@ -6,6 +13,12 @@ import os
 
 from requests.api import head
 #import event_routes
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+db = SQLAlchemy()
+jwt = JWTManager()
+mail = Mail()
 
 # App Config 
 app = Flask(__name__)
@@ -16,7 +29,12 @@ app.config.from_object('config')
 @app.route("/")
 def index():
   print(request.endpoint)
-  return render_template('pages/home.html')
+  return render_template('pages/index.html')
+
+@app.route('/profile')
+@login_required
+def profile():
+  return render_template('profile.html', username = current_user.username)
 
 @app.route("/ask")
 def ask():
