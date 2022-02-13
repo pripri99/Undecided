@@ -14,9 +14,14 @@ app.config.from_object('config')
 
 
 @app.route("/")
-def index():
+def home():
   print(request.endpoint)
   return render_template('pages/home.html')
+
+@app.route("/index")
+def index():
+  print(request.endpoint)
+  return render_template('pages/Proto.io/index.html')
 
 @app.route("/ask")
 def ask():
