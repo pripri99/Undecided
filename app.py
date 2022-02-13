@@ -44,7 +44,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-  return "Login out"
+  return "Login out "
 
 
 # Events search
