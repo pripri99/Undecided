@@ -32,7 +32,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-  return "Login out "
+  return "Login out"
 
 if __name__ == "__main__":
   app.run()

@@ -149,9 +149,9 @@ def answer(user_response):
 #Recording voice input using microphone 
 file = "file.mp3"
 flag=True
-fst="My name is Jarvis. I will answer your queries about Science. If you want to exit, say Bye"
+#fst="My name is Jarvis. I will answer your queries about Science. If you want to exit, say Bye"
 #tts = gTTS(fst, 'en')
 #tts.save(file)
 #os.system("mpg123 " + file )
 r = sr.Recognizer()
-prYellow(fst)
+#prYellow(fst)
