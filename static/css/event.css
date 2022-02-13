@@ -1,0 +1,91 @@
+#eventsContainer{
+    display: block;
+    background-color:#F9F9F9; 
+    margin: 10px auto auto auto;
+    width: 510px;
+    padding: 20px;
+    border: 4px solid lightgray;
+    border-collapse: collapse;
+}
+.inputs{
+    border-width: 1px;
+    border-radius: 2px;
+}
+p{
+    text-align: center;
+}
+p#header{
+    font-size: 30px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+p#err{
+    color:red
+}
+#location{
+    margin-left: 323px;
+}
+#searchButton{
+    margin-left:70px;
+}
+table, th, td {
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+.date{
+    width:140px
+}
+.iconImage{
+    width:80px;
+    height:60px;
+    padding-left: 10px;
+}
+.icon{
+    width:100px;
+    height:80px;
+}
+.eventtag{
+    width:400px;
+    padding-left: 10px;
+}
+.genre{
+    width:60px;
+    padding-left: 10px;
+}
+.venue{
+    width:300px;
+    padding-left: 10px;
+}
+a{
+    text-decoration: none;
+    color:black
+}
+a:hover{
+    color: gray;
+    cursor: pointer;
+}
+#eventDetailDisplay{
+    margin-top:10px auto auto auto
+}
+.display{
+    font-size:20px;
+    font-weight: bold;
+    padding-top:2px;
+}
+#outerDiv{
+    margin-left: 24%; 
+    margin-right: 24%;
+}
+#outerDivHeader{
+    text-align: center; 
+    font-size:25px; 
+    font-weight: bold;
+}
+#detailDisp{
+    display: flex; 
+    flex-direction: row;
+}
