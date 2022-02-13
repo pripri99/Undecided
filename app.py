@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import requests
 import json
 import pygeohash as pgh
+import os
 
 from requests.api import head
 #import event_routes
@@ -58,7 +59,8 @@ def getEnteredLocation():
         'Content-Type': 'application/json'
     }
     loc = request.args.get('location')
-    requestResponse = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+loc+"&key=AIzaSyB12zd-IK1elQmCzGLPiTy9LX7e2Fp2uf4", headers=headers)
+    GOOGLE_KEY = os.getenv("GOOGLE_LOC")
+    requestResponse = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+loc+"&key=" + GOOGLE_KEY , headers=headers)
     loc=requestResponse.json()['results'][0]['geometry']['location']
     return requestResponse.json()
 
@@ -68,7 +70,8 @@ def fetchEventDetail():
         'Content-Type': 'application/json'
     }
     id = request.args.get('i')
-    requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events/"+id+"?apikey=zNz1fE2HP3JJMYr8lAG1OfinYwVqRXh7", headers=headers)
+    TICKET_KEY = os.getenv("TICKETMASTER")
+    requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events/"+id+"?apikey=" + TICKET_KEY, headers=headers)
     event=requestResponse.json()
     try:
         localDate=event['dates']['start']['localDate']
