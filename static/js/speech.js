@@ -38,6 +38,12 @@ window.addEventListener("DOMContentLoaded", () => {
             success: function (response) {
                 console.log("Success")
                 console.log(response)
+
+                const ans = document.getElementById("answer");
+                const p2 = document.createElement("p");
+                const text2 = document.createTextNode(response);
+                p2.appendChild(text2);
+                ans.appendChild(p2);
                 //document.getElementById("eventDisplay").innerHTML = response;
             },
             error: function (xhr) {
