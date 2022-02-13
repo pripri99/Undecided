@@ -7,10 +7,7 @@
     border: 4px solid lightgray;
     border-collapse: collapse;
 }
-.inputs{
-    border-width: 1px;
-    border-radius: 2px;
-}
+
 p{
     text-align: center;
 }
@@ -22,12 +19,8 @@ p#header{
 p#err{
     color:red
 }
-#location{
-    margin-left: 323px;
-}
-#searchButton{
-    margin-left:70px;
-}
+
+
 table, th, td {
     border: 1px solid lightgray;
     border-collapse: collapse;

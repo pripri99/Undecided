@@ -1,4 +1,4 @@
-var current="";
+var current="New York";
 function getUserLoc() {
     let apiKey = '11e89d5932b74164834b90e6e5d99d87';
     $.getJSON('https://ipgeolocation.abstractapi.com/v1/?api_key=' + apiKey, function(data) {
@@ -8,6 +8,8 @@ function getUserLoc() {
     current= res.city;
     document.getElementById("searchButton").disabled=false;
     });
+
+    //document.getElementsByName('city')[0].placeholder=current;
 
 }
 
