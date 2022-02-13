@@ -2,45 +2,14 @@ var current="";
 function getUserLoc() {
     let apiKey = '11e89d5932b74164834b90e6e5d99d87';
     $.getJSON('https://ipgeolocation.abstractapi.com/v1/?api_key=' + apiKey, function(data) {
-    const res = JSON.stringify(data, null, 2)
-    console.log(res);
-    console.log(res[0])
-    console.log(JSON.parse(data));
+    const res = JSON.parse(JSON.stringify(data, null, 2))
+    //console.log(res);
+    console.log(res.city);
+    current= res.city;
+    document.getElementById("searchButton").disabled=false;
     });
 
 }
-        /*const getUserLoc = async () => {
-            const res = await fetch("https://ipinfo.io/json?token=b2c04e50a67ab4");
-            if (res.status === 200) {
-                const data = await res.json();
-                console.log(data);
-                //return data;
-                current=JSON.parse(data).loc;
-                console.log(current);
-                document.getElementById("searchButton").disabled=false;
-            } else {
-                console.log("Could not fetch the current position")
-                document.getElementById("err").innerHTML="Could not fetch the current position"
-                //throw new Error('Unable to fetch data!!!');
-            }
-        }*//*(){
-            xmlHttp.open("GET", "https://ipinfo.io/json?token=b2c04e50a67ab4", true);
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.onreadystatechange = function() { 
-                if (xmlHttp.readyState == 4){
-                    if(xmlHttp.status == 200){
-                        current=JSON.parse(xmlHttp.responseText).loc;
-                        console.log(current);
-                        document.getElementById("searchButton").disabled=false;
-                    }else{
-                        console.log("Could not fetch the current position")
-                        document.getElementById("err").innerHTML="Could not fetch the current position"
-                    }
-                }
-            }
-            
-            xmlHttp.send(null);
-        };*/
 
         function enableDisableTB() {
             var location = document.getElementById("location");
