@@ -1,3 +1,4 @@
+from config import MONGODB_SETTINGS
 from flask import Flask, render_template, request
 import requests
 import json
@@ -5,16 +6,51 @@ import pygeohash as pgh
 import os
 
 from requests.api import head
+
+from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+import pymongo
+import auth
 #import event_routes
 
 # App Config 
 app = Flask(__name__)
 app.config.from_object('config')
 
+#MONGODB_SETTINGS = os.getenv('MONGOLAB_URI')
+#mongo = pymongo.MongoClient(MONGODB_SETTINGS, maxPoolSize=50, connect=False)
+#db = pymongo.database.Database(mongo, 'mydatabase')
+#HOST = 'cluster0.r9mxm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'  # ex: 'oceanic.mongohq.com'
+'''db_settings = {
+    'MONGODB_DB': 'Cluster0',
+    'MONGODB_USERNAME': 'test',
+    'MONGODB_PASSWORD': 'test1',
+    'MONGODB_PORT': 30001,
+}
+app.config = dict(list(app.config.items()) + list(db_settings.items()))
+app.config["MONGODB_HOST"] = ('mongodb+srv://%(MONGODB_USERNAME)s:%(MONGODB_PASSWORD)s@'+
+                               HOST +':%(MONGODB_PORT)s/%(MONGODB_DB)s') % db_settings'''
+#app.config["MONGODB_HOST"] = MONGODB_SETTINGS
+print(os.getenv('MONGOLAB'))
+
+#app.config['MONGODB_SETTINGS'] = {'HOST':os.getenv('MONGOLAB'),'DB': 'FlaskLogin'}
+#app.config['SECRET_KEY'] = os.getenv('SECRET_KEYDB')
+db = MongoEngine(app) # connect MongoEngine with Flask App
+app.session_interface = MongoEngineSessionInterface(db) # sessions w/ mongoengine
+
+# Flask BCrypt will be used to salt the user password
+flask_bcrypt = Bcrypt(app)
+
+# Associate Flask-Login manager with current app
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 
 
 @app.route("/")
 def index():
+  auth.login()
   print(request.endpoint)
   return render_template('pages/home.html')
 
@@ -33,18 +69,7 @@ def conversation():
   print(request.endpoint)
   return render_template('pages/discussion/conversation.html')
 
-@app.route("/register")
-def register():
-  return render_template('pages/auth/register.html')
 
-@app.route("/login")
-def login():
-  return render_template('pages/auth/login.html')
-
-
-@app.route("/logout")
-def logout():
-  return "Login out"
 
 
 # Events search
