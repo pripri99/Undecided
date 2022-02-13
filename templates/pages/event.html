@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HW6</title>
+    <style>
+        #eventsContainer{
+            display: block;
+            background-color:#F9F9F9; 
+            margin: 10px auto auto auto;
+            width: 510px;
+            padding: 20px;
+            border: 4px solid lightgray;
+            border-collapse: collapse;
+        }
+        .inputs{
+            border-width: 1px;
+            border-radius: 2px;
+        }
+        p{
+            text-align: center;
+        }
+        p#header{
+            font-size: 30px;
+            margin-top:0px;
+            margin-bottom:0px;
+        }
+        p#err{
+            color:red
+        }
+        #location{
+            margin-left: 323px;
+        }
+        #searchButton{
+            margin-left:70px;
+        }
+        table, th, td {
+            border: 1px solid lightgray;
+            border-collapse: collapse;
+        }
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .date{
+            width:140px
+        }
+        .iconImage{
+            width:80px;
+            height:60px;
+            padding-left: 10px;
+        }
+        .icon{
+            width:100px;
+            height:80px;
+        }
+        .eventtag{
+            width:400px;
+            padding-left: 10px;
+        }
+        .genre{
+            width:60px;
+            padding-left: 10px;
+        }
+        .venue{
+            width:300px;
+            padding-left: 10px;
+        }
+        a{
+            text-decoration: none;
+            color:black
+        }
+        a:hover{
+            color: gray;
+            cursor: pointer;
+        }
+        #eventDetailDisplay{
+            margin-top:10px auto auto auto
+        }
+        .display{
+            font-size:20px;
+            font-weight: bold;
+            padding-top:2px;
+        }
+        #outerDiv{
+            margin-left: 24%; 
+            margin-right: 24%;
+        }
+        #outerDivHeader{
+            text-align: center; 
+            font-size:25px; 
+            font-weight: bold;
+        }
+        #detailDisp{
+            display: flex; 
+            flex-direction: row;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        var current="";
+        function getUserLoc(){
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() { 
+                if (xmlHttp.readyState == 4){
+                    if(xmlHttp.status == 200){
+                        current=JSON.parse(xmlHttp.responseText).loc;
+                        document.getElementById("searchButton").disabled=false;
+                    }else{
+                        console.log("Could not fetch the current position")
+                        document.getElementById("err").innerHTML="Could not fetch the current position"
+                    }
+                }
+            }
+            xmlHttp.open("GET", "https://ipinfo.io/?token=366644e654de5f", true);
+            xmlHttp.send(null);
+        };
+
+        function enableDisableTB() {
+            var location = document.getElementById("location");
+            var enteredLoc = document.getElementById("enteredLoc");
+            enteredLoc.disabled = location.checked ? false : true;
+            enteredLoc.value=""
+        }
+        function getEventSummary(keyword,category,distance,latitude,longitude){
+            if(distance===undefined || distance==""){
+                distance=10
+            }
+            $.ajax({
+                    url: "/getEventsSummary",
+                    data: {
+                        k: keyword,
+                        c: category,
+                        d: distance,
+                        lat: latitude,
+                        long: longitude
+                    },
+                    method: "GET",
+                    success: function(response) {
+                        console.log("Success")
+                        document.getElementById("eventDisplay").innerHTML = response;
+                    },
+                    error: function(xhr) {
+                        console.log(xhr)
+                        document.getElementById("err").innerHTML="Unable to Display Events Summary"
+                    }
+                });
+        }
+        function onClickSearch(){
+            event.preventDefault();
+            var latLong,latitude,longitude;
+            document.getElementById("eventDisplay").innerHTML=""
+            document.getElementById("eventDetailDisplay").innerHTML=""
+            var keyword=document.getElementById("ipkeyword").value
+            var category=document.getElementById("ipCategory").value
+            var distance=document.getElementById("ipDistance").value
+            var currentLocation=document.getElementById("currentLocation").checked
+            if(currentLocation==true){
+                latLong=current.split(",")
+                latitude=latLong[0]
+                longitude=latLong[1]
+                getEventSummary(keyword,category,distance,latitude,longitude)
+            }else{
+                latLong=document.getElementById("enteredLoc").value
+                $.ajax({
+                    url: "/getEnteredLocation",
+                    data: {
+                        location: latLong
+                    },
+                    method: "GET",
+                    success: function(response) {
+                        loc=response.results[0].geometry.location
+                        console.log(loc)
+                        latitude=loc.lat;
+                        longitude=loc.lng;
+                        var abc=getEventSummary(keyword,category,distance,latitude,longitude)
+                        console.log(abc)
+                    },
+                    error: function(xhr) {
+                        console.log(xhr)
+                    }
+                });
+            }
+        }
+        function onClickClear(){
+            document.getElementById("ipkeyword").value=""
+            document.getElementById("ipCategory").selectedIndex = 0
+            document.getElementById("ipDistance").value=""
+            document.getElementById("enteredLoc").value=""
+            document.getElementById("enteredLoc").disabled=true
+            document.getElementById("currentLocation").checked=true
+            document.getElementById("location").checked=false
+            document.getElementById("eventDisplay").innerHTML=""
+            document.getElementById("eventDetailDisplay").innerHTML=""
+        }
+
+        function onEventClick(x){
+            $.ajax({
+                    url: "/fetchEventDetail",
+                    data: {
+                        i: x,
+                    },
+                    method: "GET",
+                    success: function(response) {
+                        console.log("Success")
+                        document.getElementById("eventDetailDisplay").scrollIntoView({behavior: 'smooth'});
+                        document.getElementById("eventDetailDisplay").innerHTML = response;
+                    },
+                    error: function(xhr) {
+                        console.log(xhr)
+                    }
+                });
+        }
+    </script>
+</head>
+<body onload=getUserLoc()>
+    <p id="err"></p>
+    <div id="eventsContainer">
+        <p id="header"><i>Events Search</i></p>
+        <hr><br>
+        <b>
+        <form onsubmit=onClickSearch() method="GET">
+            <label for="ipkeyword">Keyword</label>
+            <input class="inputs" id="ipkeyword" type="text" required/><br>
+            <label for="ipCategory">Category</label>
+            <select id="ipCategory" name="ipCategory" class="inputs">
+                <option value="default">Default</option>
+                <option value="KZFzniwnSyZfZ7v7nJ">Music</option>
+                <option value="KZFzniwnSyZfZ7v7nE">Sports</option>
+                <option value="KZFzniwnSyZfZ7v7na">Arts & Theatre</option>
+                <option value="KZFzniwnSyZfZ7v7nn">Film</option>
+                <option value="KZFzniwnSyZfZ7v7n1">Miscellaneous</option>
+            </select><br>
+            <label for="ipDistance">Distance (miles)</label>
+            <input class="inputs" id="ipDistance" type="number" placeholder="10"/> from 
+            <input type="radio" id="currentLocation" name="place" value="here"  onclick=enableDisableTB() checked>
+            <label for="currentLocation">Here</label><br>
+            <input type="radio" id="location" name="place" onClick=enableDisableTB()>
+            <input class="inputs" id="enteredLoc" placeholder="location" required disabled><br>
+            <button type="submit" id="searchButton" disabled>Search</button>
+            <button id="clear" onClick=onClickClear()>Clear</button>
+        </form>
+        </b>
+    </div><br>
+    <div id="eventDisplay"></div>
+    <div id="eventDetailDisplay"></div>
+</body>
+</html>

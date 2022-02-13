@@ -1,54 +1,13 @@
-from flask import Flask, render_template, request
+from app import app
+from flask import Flask, request
 import requests
 import json
 import pygeohash as pgh
 
 from requests.api import head
-#import event_routes
 
-# App Config 
-app = Flask(__name__)
-app.config.from_object('config')
-
-
-
-'''@app.route("/")
-def index():
-  print(request.endpoint)
-  return render_template('pages/home.html')'''
-
-@app.route("/ask")
-def ask():
-  print(request.endpoint)
-  return render_template('pages/discussion/askMeAnything.html')
-
-@app.route("/community")
-def community():
-  print(request.endpoint)
-  return render_template('pages/discussion/community.html')
-
-@app.route("/conversation")
-def conversation():
-  print(request.endpoint)
-  return render_template('pages/discussion/conversation.html')
-
-@app.route("/register")
-def register():
-  return render_template('pages/auth/register.html')
-
-@app.route("/login")
-def login():
-  return render_template('pages/auth/login.html')
-
-
-@app.route("/logout")
-def logout():
-  return "Login out"
-
-
-# Events search
-@app.route('/', methods=['GET'])
-def event():
+@app.route('/event', methods=['GET'])
+def home():
     print("in event")
     return app.send_static_file('pages/event.html')
 
@@ -242,7 +201,4 @@ def getEventsSummary():
                 venue="N/A"
             message=message + '''<td class="date">'''+localDate  + '''   '''+ localTime + "</td>"+'''<td class="icon"><img class="iconImage" src="'''+ imgUrl +'''"/></td>'''+'''<td class="eventtag"><a class="eventLink" onClick="onEventClick(\''''+id+'''\')">'''+name+'''</a></td><td class="genre">'''+genre+'''</td><td class="venue">'''+venue+'''</td></tr>'''
         message=message+'''</table>'''
-        return message 
-
-if __name__ == "__main__":
-  app.run()
+        return message

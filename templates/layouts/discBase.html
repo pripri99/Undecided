@@ -17,15 +17,32 @@
             <nav class="navigation hide" id="navigation">
                 <span class="close-icon" id="close-icon" onclick="showIconBar()"><i class="fa fa-close"></i></span>
                 <ul class="nav-list">
-                    <li {% if request.endpoint == 'community' %}  class="nav-item"><a href="{{ url_for('community') }}">Community</a></li>
-                    <li {% if request.endpoint == 'ask' %}  class="nav-item"><a href="{{ url_for('ask') }}">Ask Me Anything</a></li>
-                    <li {% if request.endpoint == 'conversation' %}  class="nav-item"><a href="{{ url_for('conversation') }}">Conversation</a></li>
+                    <li {% if request.endpoint == 'community' %}  class="nav-item" {% endif %}><a href="{{ url_for('community') }}">Community</a></li>
+                    <li {% if request.endpoint == 'ask' %}  class="nav-item" {% endif %} ><a href="{{ url_for('ask') }}">Ask Me Anything</a></li>
+                    <li {% if request.endpoint == 'conversation' %}  class="nav-item" {% endif %}><a href="{{ url_for('conversation') }}">Conversation</a></li>
                 </ul>
             </nav>
             <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
             <div class="brand">Gather & Grow: Disucssion Board</div>
         </div>
-        {% block content %}{% endblock %}
+        <!--SearchBox Section-->
+        <div class="search-box">
+            <div>
+                <select name="" id="">
+                    <option value="Everything">Everything</option>
+                    <option value="Knitting">Knitting</option>
+                    <option value="Cooking">Cooking</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Random">Random</option>
+                </select>
+                <input type="text" name="q" placeholder="search ...">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+        
+    
+    {% block content %}{% endblock %}
     <footer>
         <span>&copy;  Gather and Grow | All Rights Reserved</span>
     </footer>
