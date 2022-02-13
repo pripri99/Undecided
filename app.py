@@ -195,10 +195,11 @@ def getEventsSummary():
     latitude= request.args.get('lat')
     longitude= request.args.get('long')
     geohash=pgh.encode(float(latitude),float(longitude),4)
+    TICKET_KEY = os.getenv("TICKETMASTER")
     if(category!="default"):
-        requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&keyword="+keywords+"&segmentId="+category+"&radius="+dist+"&unit=miles&geoPoint="+geohash, headers=headers)
+        requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+TICKET_KEY+"&keyword="+keywords+"&segmentId="+category+"&radius="+dist+"&unit=miles&geoPoint="+geohash, headers=headers)
     else:
-        requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&keyword="+keywords+"&radius="+dist+"&unit=miles&geoPoint="+geohash, headers=headers)
+        requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+TICKET_KEY+"&keyword="+keywords+"&radius="+dist+"&unit=miles&geoPoint="+geohash, headers=headers)
     evnts=requestResponse.json()
     totalEvents=evnts['page']['totalElements'] 
     if totalEvents==0:
@@ -223,7 +224,7 @@ def getEventsSummary():
         <th id="venue" class="venue" role="columnheader" data-field="venue" data-filter-control="select" data-sortable="true" aria-label="returning">Venue</th>
 		 </tr>
 	</thead>
-                <tbody role="presentation" aria-hidden="false"> <tr role="row" tabindex="0">'''
+                <tbody role="presentation" aria-hidden="false">  <tr role="row" tabindex="0">'''
         for event in events:
             try:
                 localDate=event['dates']['start']['localDate']

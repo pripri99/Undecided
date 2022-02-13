@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +16,10 @@
 </head>
 
 <body onload=getUserLoc()>
+  <header>
+    {% include 'layouts/nav.html' %}
+  </header>
+  
   <p id="err"></p>
   <div class='container'>
     <div id="eventsContainer" class='panel panel-primary dialog-panel'>
