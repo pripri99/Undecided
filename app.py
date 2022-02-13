@@ -58,7 +58,7 @@ def getEnteredLocation():
         'Content-Type': 'application/json'
     }
     loc = request.args.get('location')
-    requestResponse = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+loc+"&key=AIzaSyDxZLg_I5J7Q4r6GbVspr6pR2JdLliTxtQ", headers=headers)
+    requestResponse = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+loc+"&key=AIzaSyB12zd-IK1elQmCzGLPiTy9LX7e2Fp2uf4", headers=headers)
     loc=requestResponse.json()['results'][0]['geometry']['location']
     return requestResponse.json()
 
@@ -68,7 +68,7 @@ def fetchEventDetail():
         'Content-Type': 'application/json'
     }
     id = request.args.get('i')
-    requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events/"+id+"?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&", headers=headers)
+    requestResponse = requests.get("https://app.ticketmaster.com/discovery/v2/events/"+id+"?apikey=zNz1fE2HP3JJMYr8lAG1OfinYwVqRXh7", headers=headers)
     event=requestResponse.json()
     try:
         localDate=event['dates']['start']['localDate']
@@ -203,14 +203,24 @@ def getEventsSummary():
         <br><hr style="color:lightgray; margin-left:10%; margin-right:10%"></div>'''
     else:
         events=evnts['_embedded']['events']
-        message='''<div><table>
-                <tr>
-                    <th>Date</th>
-                    <th>Icon</th>
-                    <th>Event</th>
-                    <th>Genre</th>
-                    <th>Venue</th>
-                </tr><tr>'''
+        message='''<div><table id="table"
+                    data-toggle="table"
+              data-filter-control="true" 
+              data-show-export="true"
+              data-click-to-select="true"
+              data-toolbar="#toolbar"
+              class="respon-table respon-table-scroll">
+
+                    <thead role="presentation" aria-hidden="false">
+		 <tr role="row" tabindex="0">
+			  <th id="date" class="date" role="columnheader" data-field="date" data-filter-control="input" data-sortable="true" aria-label="Itinerary">Date</th>
+			  <th id="icon" class="icon" role="columnheader" data-field="icon" data-filter-control="select" data-sortable="true" aria-label="airline">Icon</th>
+			  <th id="event" class="event" role="columnheader" data-field="event" data-filter-control="select" data-sortable="true" aria-label="departing">Event</th>
+			  <th id="genre" class="genre" role="columnheader" data-field="genre" data-filter-control="select" data-sortable="true" aria-label="returning">Genre</th>
+        <th id="venue" class="venue" role="columnheader" data-field="venue" data-filter-control="select" data-sortable="true" aria-label="returning">Venue</th>
+		 </tr>
+	</thead>
+                <tbody role="presentation" aria-hidden="false"> <tr role="row" tabindex="0">'''
         for event in events:
             try:
                 localDate=event['dates']['start']['localDate']
@@ -240,8 +250,8 @@ def getEventsSummary():
                 venue=event['_embedded']['venues'][0]['name']
             except:
                 venue="N/A"
-            message=message + '''<td class="date">'''+localDate  + '''   '''+ localTime + "</td>"+'''<td class="icon"><img class="iconImage" src="'''+ imgUrl +'''"/></td>'''+'''<td class="eventtag"><a class="eventLink" onClick="onEventClick(\''''+id+'''\')">'''+name+'''</a></td><td class="genre">'''+genre+'''</td><td class="venue">'''+venue+'''</td></tr>'''
-        message=message+'''</table>'''
+            message=message + '''<td title="" aria-label="" headers="date" role="gridcell" tabindex="0" class="date">'''+localDate  + '''   '''+ localTime + "</td>"+'''<td class="icon" title="" aria-label="" headers="icon" role="gridcell" tabindex="0"><img class="iconImage" src="'''+ imgUrl +'''"/></td>'''+'''<td class="eventtag"  title="" aria-label="" headers="event" role="gridcell" tabindex="0"><a class="eventLink" onClick="onEventClick(\''''+id+'''\')">'''+name+'''</a></td><td class="genre" title="" aria-label="" headers="genre" role="gridcell" tabindex="0">'''+genre+'''</td><td class="venue" title="" aria-label="" headers="venue" role="gridcell" tabindex="0">'''+venue+'''</td></tr>'''
+        message=message+'''</tbody></table>'''
         return message 
 
 if __name__ == "__main__":
