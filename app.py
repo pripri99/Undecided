@@ -12,10 +12,10 @@ app.config.from_object('config')
 
 
 
-'''@app.route("/")
+@app.route("/")
 def index():
   print(request.endpoint)
-  return render_template('pages/home.html')'''
+  return render_template('pages/home.html')
 
 @app.route("/ask")
 def ask():
@@ -47,10 +47,10 @@ def logout():
 
 
 # Events search
-@app.route('/', methods=['GET'])
+@app.route('/event', methods=['GET'])
 def event():
     print("in event")
-    return app.send_static_file('pages/event.html')
+    return render_template('pages/event.html')
 
 @app.route("/getEnteredLocation",methods=['GET'])
 def getEnteredLocation():
