@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital@1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <!--NavBar Section-->
+        <div class="navbar">
+            <nav class="navigation hide" id="navigation">
+                <span class="close-icon" id="close-icon" onclick="showIconBar()"><i class="fa fa-close"></i></span>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="community.html">Community</a></li>
+                    <li class="nav-item"><a href="askMeAnything.html">Ask Me Anything</a></li>
+                    <li class="nav-item"><a href="conversation.html">Conversation</a></li>
+                </ul>
+            </nav>
+            <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
+            <div class="brand">Gather & Grow: Disucssion Board</div>
+        </div>
+        <!--SearchBox Section-->
+        <div class="search-box">
+            <div>
+                <select name="" id="">
+                    <option value="Everything">Everything</option>
+                    <option value="Knitting">Knitting</option>
+                    <option value="Cooking">Cooking</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Random">Random</option>
+                </select>
+                <input type="text" name="q" placeholder="search ...">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    <div class="container">
+        <!--Navigation-->
+        <div class="navigate">
+            <span><a href="">Conversations</a> : <a href=""> My Disucssions </a> : <a href="">Senior Citizens</a></span>
+        </div>
+
+        <!--Topic Section-->
+        <div class="topic-container">
+            <!--Original thread-->
+            <div class="head">
+                <div class="authors">Username</div>
+                <div class="content">Discussions (Read 2675 Times)</div>
+            </div>
+
+            <div class="body">
+                <div class="authors">
+                    <div class="username"><a href="">Gilbert068</a></div>
+                    <div>Location: Toronto, Ontario</div>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.1LRUIB2OXVePxD5hQm4fqwHaHa?pid=ImgDet&rs=1.jpg" alt="">
+                    <div>Posts: <u>23</u></div>
+                    <div>Age: <u>68</u></div>
+                </div>
+                <div class="content">
+                    I've been fishing with my father since I was three years old...
+                    <br>
+                    <br><br>Best fishing spot in Ontario ?
+                    Any recomendations ?
+                    <br>
+                    <hr>
+                    Regards Gilbert.
+                    <br>
+                    <div class="comment">
+                        <button onclick="showComment()">Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Comment Area-->
+        <div class="comment-area hide" id="comment-area">
+            <textarea name="comment" id="" placeholder="comment here ... "></textarea>
+            <input type="submit" value="submit">
+        </div>
+
+        <!--Comments Section-->
+        <div class="comments-container">
+            <div class="body">
+                <div class="authors">
+                    <div class="username"><a href="">Barbara0424</a></div>
+                    <div>Location: Kingston, Ontario</div>
+                    <img src="https://th.bing.com/th/id/R.b9b52b19fb824e8951728759a2063f8b?rik=rMiIsGVRsVyqkA&riu=http%3a%2f%2fi.huffpost.com%2fgen%2f1853815%2fthumbs%2fo-COLLEGEHUMOR-facebook.jpg&ehk=rI399KYDah8tEHdxVB69xLYiFIZWgQ4ndKvtuQOwi3I%3d&risl=&pid=ImgRaw&r=0.jpg" alt="">
+                    <div>Posts: <u>16</u></div>
+                    <div>Age: <u>74</u></div>
+                </div>
+                <div class="content">
+                    I don't have much knowledge in fishing. 
+                    <br>But I've heard great things about lake Ontario.
+                    <br><br>
+                    - Barbara
+                    <br>
+                    <br>
+                    <div class="comment">
+                        <button onclick="showReply()">Reply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Reply Area-->
+        <div class="comment-area hide" id="reply-area">
+            <textarea name="reply" id="" placeholder="reply here ... "></textarea>
+            <input type="submit" value="submit">
+        </div>
+
+
+        <!--Another Comment With replies-->
+        <div class="comments-container">
+            <div class="body">
+                <div class="authors">
+                    <div class="username"><a href="">Albert58</a></div>
+                    <div>Location: Ajax, Ontario</div>
+                    <img src="https://th.bing.com/th/id/R.c1482439449963ee217afef5e7c7d268?rik=F62nazGilxkMjw&riu=http%3a%2f%2fwww.dumpaday.com%2fwp-content%2fuploads%2f2014%2f04%2fold-people-taking-selfies-2.jpg&ehk=FoQE28cVr55F6udPcBgTClMhIsCG12o25ghE%2bgK8Zjw%3d&risl=&pid=ImgRaw&r=0.jpg" alt="">
+                    <div>Posts: <u>75</u></div>
+                    <div>Age: <u>58</u></div>
+                </div>
+                <div class="content">
+                    Just made some apple pie. 
+                    <br>Yum!
+                    <br><br>
+                    -Albert
+                    <br>
+                    <br>
+                    <div class="comment">
+                        <button onclick="showReply()">Reply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Reply Area-->
+        <div class="comment-area hide" id="reply-area">
+            <textarea name="reply" id="" placeholder="reply here ... "></textarea>
+            <input type="submit" value="submit">
+        </div>
+
+        
+
+    </div>
+    <footer>
+        <span>&copy;  Gather and Grow | All Rights Reserved</span>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>
