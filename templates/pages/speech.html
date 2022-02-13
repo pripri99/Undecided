@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Browser speech recognition</title>
+    <link rel="stylesheet" href="../../static/css/speech.css" />
+  </head>
+<body class="speech">
+<header>
+    <h1>Browser speech recognition</h1>
+  </header>
+  <main>
+    <button id="button">Start listening</button>
+    <div id="result"></div>
+    <p id="message" hidden aria-hidden="true">
+      Your browser doesn't support Speech Recognition. Sorry.
+    </p>
+  </main>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="../../static/js/speech.js" defer></script>
+</body>
+
+</html>

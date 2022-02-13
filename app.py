@@ -3,7 +3,8 @@ import requests
 import json
 import pygeohash as pgh
 import os
-
+import json
+from AI_response import *
 from requests.api import head
 #import event_routes
 
@@ -32,6 +33,18 @@ def community():
 def conversation():
   print(request.endpoint)
   return render_template('pages/discussion/conversation.html')
+
+@app.route('/speech')
+def speech():
+    return render_template('pages/speech.html')
+
+@app.route('/postmethod', methods = ['POST'])
+def get_post_javascript_data():
+    jsdata = request.form['javascript_data']
+    print(jsdata)
+    res = answer(jsdata)
+    print(res)
+    return json.loads(jsdata)[0]
 
 @app.route("/register")
 def register():
