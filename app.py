@@ -38,13 +38,16 @@ def conversation():
 def speech():
     return render_template('pages/speech.html')
 
-@app.route('/postmethod', methods = ['POST'])
+@app.route('/getmethod', methods = ['GET'])
 def get_post_javascript_data():
-    jsdata = request.form['javascript_data']
+    #jsdata = request.form['javascript_data']
+    jsdata = request.args.get('javascript_data')
     print(jsdata)
     res = answer(jsdata)
+    str_res = "Search for event with ' " + res[0] + " ' keyword in " + res[1]
+    print(str_res)
     print(res)
-    return json.loads(jsdata)[0]
+    return str_res
 
 @app.route("/register")
 def register():

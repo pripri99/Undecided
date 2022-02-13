@@ -14,6 +14,9 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 import en_core_web_lg
 import spacy
+from string import punctuation
+from collections import Counter
+import json
 
 
 # for downloading package files can be commented after First run
@@ -67,13 +70,9 @@ def prBlack(skk): print("\033[98m {}\033[00m" .format(skk))
 
 
  
-#Reading in the input_corpus
-with open('intro_join','r', encoding='utf8', errors ='ignore') as fin:
-    raw = fin.read().lower()
 
-#TOkenisation
-sent_tokens = nltk.sent_tokenize(raw)# converts to list of sentences 
-word_tokens = nltk.word_tokenize(raw)# converts to list of words
+
+
 
 # Preprocessing
 lemmer = WordNetLemmatizer()
@@ -95,63 +94,26 @@ def greeting(sentence):
             return random.choice(GREETING_RESPONSES)
 
 
-# Generating response and processing 
-def response(user_response):
-    robo_response=''
-    sent_tokens.append(user_response)
-    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
-    tfidf = TfidfVec.fit_transform(sent_tokens)
-    vals = cosine_similarity(tfidf[-1], tfidf)
-    idx=vals.argsort()[0][-2]
-    flat = vals.flatten()
-    flat.sort()
-    req_tfidf = flat[-2]
-    if(req_tfidf==0):
-        robo_response=robo_response+"I am sorry! I don't understand you"
-        return robo_response
-    else:
-        robo_response = robo_response+sent_tokens[idx]
-        return robo_response
+def get_keywords(text):
+    result = []
+    pos_tag = ['PROPN', 'ADJ', 'NOUN'] 
+    nlp = spacy.load("en_core_web_lg")
+    doc = nlp(text.lower())
+    for token in doc:
+        if(token.text in nlp.Defaults.stop_words or token.text in punctuation):
+            continue
+    
+        if(token.pos_ in pos_tag):
+            result.append(token.text)
+                
+    return result 
 
 def answer(user_response):
-    ans = ""
     print(user_response)
     
     #nlp = en_core_web_lg.load()
-    nlp = spacy.load("en_core_web_lg")
-    doc = nlp(user_response)
-    print(doc.ents)
-    '''clas=classifier.classify(dialogue_act_features(user_response))
-    print(clas)
-    if(clas!='Bye'):
-        if(clas=='Emotion'):
-            ans = "Jarvis: You are welcome.."
-            prYellow("Jarvis: You are welcome..")
-        else:
-            if(greeting(user_response)!=None):
-                ans = "Jarvis: "+greeting(user_response)
-                print("\033[93m {}\033[00m" .format("Jarvis: "+greeting(user_response)))
-            else:
-                
-                print("\033[93m {}\033[00m" .format("Jarvis: ",end=""))
-                res=(response(user_response))
-                ans = res
-                prYellow(res)
-                sent_tokens.remove(user_response)
-                #tts = gTTS(res, 'en')
-                #tts.save(file)
-                #os.system("mpg123 " + file)
-    else:
-        ans = "Jarvis: Bye! take care.."
-        prYellow("Jarvis: Bye! take care..")'''
+    ans = get_keywords(user_response)
+    #print(doc.ents)
     return ans
 
-#Recording voice input using microphone 
-file = "file.mp3"
-flag=True
-#fst="My name is Jarvis. I will answer your queries about Science. If you want to exit, say Bye"
-#tts = gTTS(fst, 'en')
-#tts.save(file)
-#os.system("mpg123 " + file )
-r = sr.Recognizer()
-#prYellow(fst)
+
