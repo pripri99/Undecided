@@ -1,2 +1,2 @@
 # Gather&Grow
-https://devpost.com/software/gather-grow
+Ellehacks 2022: https://devpost.com/software/gather-grow
